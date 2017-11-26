@@ -243,6 +243,7 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 0
 nnoremap <leader>jt :YcmCompleter GoTo<CR>
 nnoremap <leader>jr :YcmCompleter GoToReferences<CR>
 nnoremap <leader>jd :YcmCompleter GetDoc<CR><C-W><C-K>
+nnoremap <leader>jc :pclose<CR>
 
 
 
