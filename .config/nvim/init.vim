@@ -91,14 +91,14 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/Users/haotianbeidou/.cache/nvim/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/nvim/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/Users/haotianbeidou/.cache/nvim/dein')
-  call dein#begin('/Users/haotianbeidou/.cache/nvim/dein')
+if dein#load_state('~/.cache/nvim/dein')
+  call dein#begin('~/.cache/nvim/dein')
   " Let dein manage dein
   " Required:
-  call dein#add('/Users/haotianbeidou/.cache/nvim/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('~/.cache/nvim/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
   call dein#add('vim-airline/vim-airline')
