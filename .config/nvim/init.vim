@@ -1,16 +1,29 @@
 " 定义快捷键的前缀，即<Leader>
-let mapleader=","
+let mapleader=','
+
 
 " 一些按键映射"
-" ,q强制不保存退出
-noremap <Leader>q :q!<CR>
-" ,fs强制保存
-noremap <leader>fs :w!<CR>
-" ,fw强制保存后退出
-noremap <Leader>fw :wq!<CR>
+" 退出本窗口
+noremap <Leader>qq :q<CR>
+" 不保存,强制退出本窗口
+noremap <leader>qQ :q!<CR>
+" 退出所有窗口
+noremap <Leader>qa :qa<CR>
+" 不保存,强制退出所有窗口
+noremap <leader>qA :qa!<CR>
+" 保存本窗口文件
+noremap <leader>fs :w<CR>
+" 保存所有窗口文件
+noremap <leader>fS :wa<CR>
+" 强制保存后退出
+noremap <Leader>fw :wa!<CR>:qa!<CR>
+" 新窗口中新建文件
+noremap <leader>fn :new<CR>
+" 新窗口中打开文件
+noremap <leader>fo :sp 
 " jj退出编辑模式，回到正常模式
 inoremap jj <esc>
-" 快速切换 split 窗口
+" 快速切换窗口
 nnoremap <Leader>wj <C-W><C-J>
 nnoremap <Leader>wk <C-W><C-K>
 nnoremap <Leader>wl <C-W><C-L>
@@ -22,11 +35,12 @@ nnoremap <leader>bj :bn<CR>
 nnoremap <leader>bk :bN<CR>
 " 关闭当前缓冲区
 nnoremap <leader>bc :bd<CR>
-nnoremap <leader>t :terminal<CR>i
 " 打开quickfix
 noremap <leader>wo :copen<CR>
 " 关闭quickfix
 noremap <leader>wc :cclose<CR>
+" 打开内建终端
+nnoremap <leader>t :terminal<CR>i
 
 " 开启实时搜索功能
 set incsearch
@@ -36,7 +50,7 @@ set ignorecase
 set wildmenu
 
 " 禁止光标闪烁
-set gcr=a:block-blinkon0
+set guicursor=a:block-blinkon0
 " 禁止显示滚动条
 set guioptions-=l
 set guioptions-=L
@@ -86,10 +100,6 @@ set fileencoding=utf-8
 
 
 " dein设置
-if &compatible
-  set nocompatible               " Be iMproved
-endif
-
 " Required:
 set runtimepath+=~/.cache/nvim/dein/repos/github.com/Shougo/dein.vim
 
@@ -143,23 +153,22 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 
 
 
-
 " NERDTree配置
 " ,fl开启和关闭树
 map <leader>fl :NERDTreeToggle<CR>
-let NERDTreeChDirMode=1
+let g:NERDTreeChDirMode=1
 " 显示书签
-let NERDTreeShowBookmarks=1
+let g:NERDTreeShowBookmarks=1
 " 设置忽略文件类型
-let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+let g:NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 " 设置NERDTree子窗口宽度
-let NERDTreeWinSize=32
+let g:NERDTreeWinSize=32
 " 显示隐藏文件
-let NERDTreeShowHidden=1
+let g:NERDTreeShowHidden=1
 " NERDTree 子窗口中不显示冗余帮助信息
-let NERDTreeMinimalUI=1
+let g:NERDTreeMinimalUI=1
 " 删除文件时自动删除文件对应 buffer
-let NERDTreeAutoDeleteBuffer=1
+let g:NERDTreeAutoDeleteBuffer=1
 
 
 " ale配置
@@ -231,6 +240,9 @@ let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_complete_in_strings = 1
 "注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
+nnoremap <leader>jt :YcmCompleter GoTo<CR>
+nnoremap <leader>jr :YcmCompleter GoToReferences<CR>
+nnoremap <leader>jd :YcmCompleter GetDoc<CR><C-W><C-K>
 
 
 
@@ -256,7 +268,7 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " undotree配置
 nnoremap <leader>u :UndotreeToggle<cr>
-if has("persistent_undo")
+if has('persistent_undo')
     set undodir=~/.cache/nvim/.undodir/
     set undofile
 endif
