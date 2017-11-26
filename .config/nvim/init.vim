@@ -91,32 +91,30 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/Users/haotianbeidou/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=/Users/haotianbeidou/.cache/nvim/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/Users/haotianbeidou/.cache/dein')
-  call dein#begin('/Users/haotianbeidou/.cache/dein')
-
+if dein#load_state('/Users/haotianbeidou/.cache/nvim/dein')
+  call dein#begin('/Users/haotianbeidou/.cache/nvim/dein')
   " Let dein manage dein
   " Required:
-  call dein#add('/Users/haotianbeidou/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('/Users/haotianbeidou/.cache/nvim/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
-"  call dein#add('Shougo/neosnippet.vim')
-"  call dein#add('Shougo/neosnippet-snippets')
   call dein#add('vim-airline/vim-airline')
   call dein#add('scrooloose/nerdtree')
   call dein#add('w0rp/ale')
   call dein#add('Yggdroot/indentLine')
   call dein#add('skywind3000/asyncrun.vim')
   call dein#add('altercation/vim-colors-solarized')
-"  call dein#add('Valloric/YouCompleteMe', {'merged': 0})
+  call dein#add('Valloric/YouCompleteMe')
   call dein#add('jiangmiao/auto-pairs')
   call dein#add('scrooloose/nerdcommenter')
   call dein#add('terryma/vim-multiple-cursors')
   call dein#add('mbbill/undotree')
-  " You can specify revision/branch/tag.
-  " call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+  call dein#add('godlygeek/tabular')
+  call dein#add('joker1007/vim-markdown-quote-syntax')
+  call dein#add('rcmdnk/vim-markdown')
 
   " Required:
   call dein#end()
@@ -125,9 +123,13 @@ endif
 
 " Required:
 filetype plugin indent on
+syntax enable
+
 " 配色方案
 set background=dark
 colorscheme solarized
+" 设置dein安装插件超时时间
+" let g:dein#install_process_timeout = 3600
 
 
 
@@ -176,8 +178,12 @@ let g:indentLine_enabled = 1
 
 
 
+" 用isort整理python代码的import
+autocmd FileType python nnoremap <leader>i :!isort %<CR><CR>
+" 用yapf格式化python代码
+autocmd FileType python nnoremap <leader>= :0,$!yapf<CR>
 " 一键运行python文件
-nnoremap <F5> :call <SID>compile_and_run()<CR>
+nnoremap <leader>fr :call <SID>compile_and_run()<CR>
 
 " AsynRun设置
 augroup NVIM_ASYNCRUN
@@ -203,30 +209,28 @@ endfunction
 
 
 
-" " YCM 补全菜单配色
-" " 菜单
-" highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
-" " 选中项
-" highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
-" " 补全功能在注释中同样有效
-" let g:ycm_complete_in_comments=1
-" " 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
-" let g:ycm_confirm_extra_conf=0
-" " 开启 YCM 标签补全引擎
-" let g:ycm_collect_identifiers_from_tags_files=1
-" " 引入 C++ 标准库tags
-" set tags+=/data/misc/software/misc./vim/stdcpp.tags
-" " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
-" inoremap <leader>; <C-x><C-o>
-" " 补全内容不以分割子窗口形式出现，只显示补全列表
-" set completeopt-=preview
-" " 从第一个键入字符就开始罗列匹配项
-" let g:ycm_min_num_of_chars_for_completion=1
-" " 禁止缓存匹配项，每次都重新生成匹配项
-" let g:ycm_cache_omnifunc=0
-" " 语法关键字补全			
-" let g:ycm_seed_identifiers_with_syntax=1
-
+" YouCompleteMe配置
+let g:ycm_global_ycm_extra_conf = '~/.cache/nvim/ycm/.ycm_extra_conf.py'
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
+" YCM 补全菜单配色
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf=0
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=1
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax=1
+"在字符串输入中也能补全
+let g:ycm_complete_in_strings = 1
+"注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 0
 
 
 
@@ -253,6 +257,6 @@ let g:multi_cursor_quit_key='<Esc>'
 " undotree配置
 nnoremap <leader>u :UndotreeToggle<cr>
 if has("persistent_undo")
-    set undodir=~/.cache/.undodir/
+    set undodir=~/.cache/nvim/.undodir/
     set undofile
 endif
